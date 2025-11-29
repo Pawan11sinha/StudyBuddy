@@ -13,7 +13,6 @@ function SignupForm() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  // student or instructor
   const [accountType, setAccountType] = useState(ACCOUNT_TYPE.STUDENT)
 
   const [formData, setFormData] = useState({
@@ -29,34 +28,36 @@ function SignupForm() {
 
   const { firstName, lastName, email, password, confirmPassword } = formData
 
-  // Handle input fields, when some value changes
   const handleOnChange = (e) => {
-    setFormData((prevData) => ({
-      ...prevData,
+    setFormData((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
     }))
   }
 
-  // Handle Form Submission
   const handleOnSubmit = (e) => {
     e.preventDefault()
 
-    if (password !== confirmPassword) {
-      toast.error("Passwords Do Not Match")
+    if (!firstName || !lastName || !email || !password || !confirmPassword) {
+      toast.error("All fields are required")
       return
     }
+
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match")
+      return
+    }
+
     const signupData = {
       ...formData,
       accountType,
     }
 
-    // Setting signup data to state
-    // To be used after otp verification
     dispatch(setSignupData(signupData))
-    // Send OTP to user for verification
-    dispatch(sendOtp(formData.email, navigate))
 
-    // Reset
+    dispatch(sendOtp(email, navigate))
+
+    // Reset form (but keep accountType)
     setFormData({
       firstName: "",
       lastName: "",
@@ -64,32 +65,21 @@ function SignupForm() {
       password: "",
       confirmPassword: "",
     })
-    setAccountType(ACCOUNT_TYPE.STUDENT)
   }
 
-  // data to pass to Tab component
   const tabData = [
-    {
-      id: 1,
-      tabName: "Student",
-      type: ACCOUNT_TYPE.STUDENT,
-    },
-    {
-      id: 2,
-      tabName: "Instructor",
-      type: ACCOUNT_TYPE.INSTRUCTOR,
-    },
+    { id: 1, tabName: "Student", type: ACCOUNT_TYPE.STUDENT },
+    { id: 2, tabName: "Instructor", type: ACCOUNT_TYPE.INSTRUCTOR },
   ]
 
   return (
     <div>
-      {/* Tab */}
       <Tab tabData={tabData} field={accountType} setField={setAccountType} />
-      {/* Form */}
+
       <form onSubmit={handleOnSubmit} className="flex w-full flex-col gap-y-4">
         <div className="flex gap-x-4">
           <label>
-            <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
+            <p className="mb-1 text-sm text-richblack-5">
               First Name <sup className="text-pink-200">*</sup>
             </p>
             <input
@@ -99,14 +89,12 @@ function SignupForm() {
               value={firstName}
               onChange={handleOnChange}
               placeholder="Enter first name"
-              style={{
-                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-              }}
-              className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
+              className="w-full rounded-md bg-richblack-800 p-3 text-richblack-5 shadow-[inset_0_-1px_0_rgba(255,255,255,0.18)]"
             />
           </label>
+
           <label>
-            <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
+            <p className="mb-1 text-sm text-richblack-5">
               Last Name <sup className="text-pink-200">*</sup>
             </p>
             <input
@@ -116,33 +104,30 @@ function SignupForm() {
               value={lastName}
               onChange={handleOnChange}
               placeholder="Enter last name"
-              style={{
-                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-              }}
-              className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
+              className="w-full rounded-md bg-richblack-800 p-3 text-richblack-5 shadow-[inset_0_-1px_0_rgba(255,255,255,0.18)]"
             />
           </label>
         </div>
-        <label className="w-full">
-          <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
+
+        <label>
+          <p className="mb-1 text-sm text-richblack-5">
             Email Address <sup className="text-pink-200">*</sup>
           </p>
           <input
             required
-            type="text"
+            type="email"
             name="email"
             value={email}
             onChange={handleOnChange}
             placeholder="Enter email address"
-            style={{
-              boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-            }}
-            className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
+            className="w-full rounded-md bg-richblack-800 p-3 text-richblack-5 shadow-[inset_0_-1px_0_rgba(255,255,255,0.18)]"
           />
         </label>
+
         <div className="flex gap-x-4">
-          <label className="relative">
-            <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
+          {/* Password */}
+          <label className="relative w-full">
+            <p className="mb-1 text-sm text-richblack-5">
               Create Password <sup className="text-pink-200">*</sup>
             </p>
             <input
@@ -151,25 +136,25 @@ function SignupForm() {
               name="password"
               value={password}
               onChange={handleOnChange}
-              placeholder="Enter Password"
-              style={{
-                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-              }}
-              className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] pr-10 text-richblack-5"
+              placeholder="Enter password"
+              className="w-full rounded-md bg-richblack-800 p-3 pr-10 text-richblack-5 shadow-[inset_0_-1px_0_rgba(255,255,255,0.18)]"
             />
+
             <span
               onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute right-3 top-[38px] z-[10] cursor-pointer"
+              className="absolute right-3 top-10 cursor-pointer"
             >
               {showPassword ? (
-                <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
+                <AiOutlineEyeInvisible fontSize={24} />
               ) : (
-                <AiOutlineEye fontSize={24} fill="#AFB2BF" />
+                <AiOutlineEye fontSize={24} />
               )}
             </span>
           </label>
-          <label className="relative">
-            <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
+
+          {/* Confirm Password */}
+          <label className="relative w-full">
+            <p className="mb-1 text-sm text-richblack-5">
               Confirm Password <sup className="text-pink-200">*</sup>
             </p>
             <input
@@ -178,27 +163,26 @@ function SignupForm() {
               name="confirmPassword"
               value={confirmPassword}
               onChange={handleOnChange}
-              placeholder="Confirm Password"
-              style={{
-                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-              }}
-              className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] pr-10 text-richblack-5"
+              placeholder="Confirm password"
+              className="w-full rounded-md bg-richblack-800 p-3 pr-10 text-richblack-5 shadow-[inset_0_-1px_0_rgba(255,255,255,0.18)]"
             />
+
             <span
               onClick={() => setShowConfirmPassword((prev) => !prev)}
-              className="absolute right-3 top-[38px] z-[10] cursor-pointer"
+              className="absolute right-3 top-10 cursor-pointer"
             >
               {showConfirmPassword ? (
-                <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
+                <AiOutlineEyeInvisible fontSize={24} />
               ) : (
-                <AiOutlineEye fontSize={24} fill="#AFB2BF" />
+                <AiOutlineEye fontSize={24} />
               )}
             </span>
           </label>
         </div>
+
         <button
           type="submit"
-          className="mt-6 rounded-[8px] bg-yellow-50 py-[8px] px-[12px] font-medium text-richblack-900"
+          className="mt-6 rounded-md bg-yellow-50 py-2 px-3 font-medium text-richblack-900"
         >
           Create Account
         </button>

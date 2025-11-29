@@ -8,8 +8,8 @@ import logo from "../../assets/Logo/Logo-Full-Light.png"
 import { NavbarLinks } from "../../data/navbar-links"
 import { apiConnector } from "../../services/apiconnector"
 import { categories } from "../../services/apis"
-// import { ACCOUNT_TYPE } from "../../utils/constants"
-// import ProfileDropdown from "../core/Auth/ProfileDropDown"
+import { ACCOUNT_TYPE } from "../../utils/constants"
+import ProfileDropdown from "../core/Auth/ProfileDropDown"
 
 function Navbar() {
   const { token } = useSelector((state) => state.auth)
@@ -53,7 +53,7 @@ function Navbar() {
         location.pathname !== "/" ? "bg-richblack-800" : ""
       } transition-all duration-200`}
     >
-      <div className="flex w-11/12 max-w-maxContent items-center justify-between">
+      <div className="flex w-full max-w-screen-2xl px-6 items-center justify-between mx-auto">
         {/* Logo */}
         <Link to="/">
           <img src={logo} alt="Logo" width={160} height={32} loading="lazy" />
@@ -125,8 +125,8 @@ function Navbar() {
         {/* Login / Signup / Dashboard */}
         <div className="hidden items-center gap-x-4 md:flex">
           {user && user?.accountType !==
-        //    ACCOUNT_TYPE.INSTRUCTOR 
-           "Instructor"
+           ACCOUNT_TYPE.INSTRUCTOR 
+        //    "Instructor"
            
            && (
             <Link to="/dashboard/cart" className="relative">
@@ -152,7 +152,7 @@ function Navbar() {
               </button>
             </Link>
           )}
-          {/* {token !== null && <ProfileDropdown />} */}
+          {token !== null && <ProfileDropdown />}
         </div>
         <button className="mr-4 md:hidden">
           <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
