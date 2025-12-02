@@ -7,6 +7,15 @@ export const endpoints = {
   LOGIN_API: BASE_URL + "/auth/login",
   RESETPASSTOKEN_API: BASE_URL + "/auth/reset-password-token",
   RESETPASSWORD_API: BASE_URL + "/auth/reset-password",
+  
+}
+
+
+
+export const quizEndpoints = {
+  QUIZ_RANDOM_API: `${BASE_URL}/quiz/random`,
+  QUIZ_ATTEMPT_API: `${BASE_URL}/quiz/attempt`,
+  QUIZ_HISTORY_API: `${BASE_URL}/quiz/history`,
 }
 
 // PROFILE ENDPOINTS

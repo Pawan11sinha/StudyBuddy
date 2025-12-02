@@ -291,30 +291,7 @@ const DoubtChat = () => {
                   `}
                 >
                   {msg.text}
-
-                  {/* Per-message controls (optional, use same global handlers) */}
-                  {isModel && (
-                    <div className="flex gap-3 mt-1 text-[11px]">
-                      <button
-                        onClick={() => speakText(msg.text)}
-                        className="text-yellow-300 hover:text-yellow-200 underline"
-                      >
-                        ▶ Play
-                      </button>
-                      {/* <button
-                        onClick={handlePauseSpeech}
-                        className="text-yellow-300 hover:text-yellow-200 underline"
-                      >
-                        ⏸ Pause
-                      </button> */}
-                      <button
-                        onClick={handleStopSpeech}
-                        className="text-yellow-300 hover:text-yellow-200 underline"
-                      >
-                        ⏹ Stop
-                      </button>
-                    </div>
-                  )}
+               
                 </div>
               </div>
             );

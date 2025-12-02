@@ -88,14 +88,14 @@ function VerifyEmail() {
             </button>
           </form>
           <div className="mt-6 flex items-center justify-between">
-            <Link to="/signup">
+            <Link to="/login">
               <p className="text-richblack-5 flex items-center gap-x-2">
-                <BiArrowBack /> Back To Signup
+                <BiArrowBack /> Back To login
               </p>
             </Link>
             <button
               className="flex items-center text-blue-100 gap-x-2"
-              onClick={() => dispatch(sendOtp(signupData.email))}
+              onClick={() => dispatch(sendOtp(signupData.email,navigate))}
             >
               <RxCountdownTimer />
               Resend it

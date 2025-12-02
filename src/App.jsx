@@ -17,6 +17,19 @@ import DoubtChat from './components/common/DoubtChat';
 
 
 
+import QuizCategory from "./pages/Quiz/QuizCategory";
+import QuizPlay from "./pages/Quiz/QuizPlay";
+import QuizHistory from "./pages/Quiz/QuizHistory";
+// aur tumhara PrivateRoute/RequireAuth
+
+
+
+
+
+
+
+
+
 
 
 const App = () => {
@@ -100,7 +113,12 @@ const App = () => {
           }
         />
 
+    <Route path="/quiz" element={<QuizCategory />} />
+  <Route path="/quiz/:category" element={<QuizPlay />} />
+  <Route path="/quiz/history" element={<QuizHistory />} />
 
+
+          
     {/* <Route path="/contact" element={<Contact />} /> */}
 
 
