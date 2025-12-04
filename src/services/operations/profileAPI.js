@@ -35,10 +35,14 @@ export function getUserDetails(token, navigate) {
 }
 
 export async function getUserEnrolledCourses(token) {
-  const toastId = toast.loading("Loading...")
+  // const toastId = toast.loading("Loading...")
+  //  console.log("TOKEN IN getUserEnrolledCourses:", token)
   let result = []
+ 
+
   try {
-    console.log("BEFORE Calling BACKEND API FOR ENROLLED COURSES");
+    // console.log("BEFORE Calling BACKEND API FOR ENROLLED COURSES");
+
     const response = await apiConnector(
       "GET",
       GET_USER_ENROLLED_COURSES_API,
@@ -47,7 +51,7 @@ export async function getUserEnrolledCourses(token) {
         Authorization: `Bearer ${token}`,
       }
     )
-    console.log("AFTER Calling BACKEND API FOR ENROLLED COURSES");
+    // console.log("AFTER Calling BACKEND API FOR ENROLLED COURSES");
     // console.log(
     //   "GET_USER_ENROLLED_COURSES_API API RESPONSE............",
     //   response
@@ -61,7 +65,7 @@ export async function getUserEnrolledCourses(token) {
     console.log("GET_USER_ENROLLED_COURSES_API API ERROR............", error)
     toast.error("Could Not Get Enrolled Courses")
   }
-  toast.dismiss(toastId)
+  // toast.dismiss(toastId)
   return result
 }
 
