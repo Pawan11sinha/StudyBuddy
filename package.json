@@ -19,9 +19,10 @@
     "chart.js": "^4.5.1",
     "copy-to-clipboard": "^3.3.3",
     "icons": "^1.0.0",
-    "react": "^19.2.0",
+     "react": "^18.3.1",
+  "react-dom": "^18.3.1",
     "react-chartjs-2": "^5.3.1",
-    "react-dom": "^19.2.0",
+   
     "react-dropzone": "^14.3.8",
     "react-hook-form": "^7.66.1",
     "react-hot-toast": "^2.6.0",

@@ -29,9 +29,7 @@ import ViewCourse from "./pages/ViewCourse";
 import VideoDetails from "./components/core/ViewCourse/VideoDetails";
 import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor";
 
-// App.jsx or Routes.jsx
 
-// aur tumhara PrivateRoute/RequireAuth
 
 const App = () => {
     const dispatch = useDispatch();
