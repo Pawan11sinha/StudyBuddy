@@ -60,7 +60,7 @@ exports.sendotp = async (req, res) => {
       success: true,
       message: `OTP Sent Successfully`,
       // production me OTP response me mat bhejna
-      // otp,
+      otp,
     })
   } catch (error) {
     console.log("SEND OTP ERROR:", error)
