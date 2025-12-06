@@ -14,51 +14,51 @@ require("dotenv").config()
 
 // Send OTP For Email Verification
 exports.sendotp = async (req, res) => {
-  // try {
-  //   const { email } = req.body
+  try {
+    const { email } = req.body
 
-  //   const checkUserPresent = await User.findOne({ email })
-  //   if (checkUserPresent) {
-  //     return res.status(401).json({
-  //       success: false,
-  //       message: `User is Already Registered`,
-  //     })
-  //   }
+    const checkUserPresent = await User.findOne({ email })
+    if (checkUserPresent) {
+      return res.status(401).json({
+        success: false,
+        message: `User is Already Registered`,
+      })
+    }
 
-  //   // generate unique OTP
-  //   let otp = otpGenerator.generate(6, {
-  //     upperCaseAlphabets: false,
-  //     lowerCaseAlphabets: false,
-  //     specialChars: false,
-  //   })
+    // generate unique OTP
+    let otp = otpGenerator.generate(6, {
+      upperCaseAlphabets: false,
+      lowerCaseAlphabets: false,
+      specialChars: false,
+    })
 
-  //   let existingOtp = await OTP.findOne({ otp })
-  //   while (existingOtp) {
-  //     otp = otpGenerator.generate(6, {
-  //       upperCaseAlphabets: false,
-  //       lowerCaseAlphabets: false,
-  //       specialChars: false,
-  //     })
-  //     existingOtp = await OTP.findOne({ otp })
-  //   }
+    let existingOtp = await OTP.findOne({ otp })
+    while (existingOtp) {
+      otp = otpGenerator.generate(6, {
+        upperCaseAlphabets: false,
+        lowerCaseAlphabets: false,
+        specialChars: false,
+      })
+      existingOtp = await OTP.findOne({ otp })
+    }
 
-  //   const otpPayload = { email, otp }
-  //   const otpBody = await OTP.create(otpPayload)
-  //   console.log("OTP Body", otpBody)
+    const otpPayload = { email, otp }
+    const otpBody = await OTP.create(otpPayload)
+    console.log("OTP Body", otpBody)
 
-  //   // agar yahin se mail bhejna hai to:
-  //   // await mailSender(email, "Your OTP", `Your OTP is ${otp}`)
+    // agar yahin se mail bhejna hai to:
+    // await mailSender(email, "Your OTP", `Your OTP is ${otp}`)
 
-  //   return res.status(200).json({
-  //     success: true,
-  //     message: `OTP Sent Successfully`,
-  //     // production me OTP response me mat bhejna
-  //     otp,
-  //   })
-  // } catch (error) {
-  //   console.log("SEND OTP ERROR:", error)
-  //   return res.status(500).json({ success: false, error: error.message })
-  // }
+    return res.status(200).json({
+      success: true,
+      message: `OTP Sent Successfully`,
+      // production me OTP response me mat bhejna
+      otp,
+    })
+  } catch (error) {
+    console.log("SEND OTP ERROR:", error)
+    return res.status(500).json({ success: false, error: error.message })
+  }
 }
 
 // Signup Controller for Registering USers
