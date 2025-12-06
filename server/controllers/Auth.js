@@ -7,6 +7,7 @@ const mailSender = require("../utils/mailSender")
 const { passwordUpdated } = require("../mail/templates/passwordUpdate")
 const Profile = require("../models/Profile")
 require("dotenv").config()
+const emailTemplate = require("../mail/templates/emailVerificationTemplate")
 
 
 
@@ -54,8 +55,9 @@ exports.sendotp = async (req, res) => {
     console.log("OTP Body", otpBody)
 
     // agar yahin se mail bhejna hai to:
-    await mailSender(email, "Your OTP", `Your OTP is ${otp}`)
+      await mailSender(email, "Verification Email", emailTemplate(otp));
 
+    
     return res.status(200).json({
       success: true,
       message: `OTP Sent Successfully`,

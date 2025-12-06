@@ -1,33 +1,38 @@
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
+const dotenv = require("dotenv");
+dotenv.config();
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const mailSender = async (email, title, body) => {
-    try{
-            let transporter = nodemailer.createTransport({
-                host:process.env.MAIL_HOST,
-                auth:{
-                    user: process.env.MAIL_USER,
-                    pass: process.env.MAIL_PASS,
-                },
-                // Add connection timeout to prevent hanging
-                connectionTimeout: 10000, // 10 seconds
-                greetingTimeout: 10000, // 10 seconds
-                socketTimeout: 10000, // 10 seconds
-            })
+  try {
+    const { data, error } = await resend.emails.send({
+      from: process.env.RESEND_FROM_EMAIL,
+      to: email,
+      subject: title,
+      html: body,
+    });
 
-
-            let info = await transporter.sendMail({
-                from: 'Studybuddy || Aayan',
-                to:`${email}`,
-                subject: `${title}`,
-                html: `${body}`,
-            })
-            console.log(info);
-            return info;
+    if (error) {
+      console.log("MAIL SENDER ERROR:", error);
+      throw error;
     }
-    catch(error) {
-        console.log(error.message);
-        throw error; // Re-throw error so caller knows it failed
-    }
-}
 
+    // Ye info object bilkul Nodemailer jaisa bana diya
+    const info = {
+      accepted: [email],
+      rejected: [],
+      response: "Email sent via Resend HTTP API",
+      messageId: data?.id,
+    };
+
+    console.log("MAIL SENT:", info);
+    return info;
+  } catch (err) {
+    console.log("MAIL SENDER ERROR:", err);
+    throw err;
+  }
+};
 module.exports = mailSender;
+
+
