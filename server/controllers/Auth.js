@@ -15,6 +15,14 @@ require("dotenv").config()
 // Send OTP For Email Verification
 exports.sendotp = async (req, res) => {
   try {
+    // Safety check for req.body
+    if (!req.body || typeof req.body !== 'object') {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid request body",
+      })
+    }
+
     const { email } = req.body
 
     // Validate email is provided
@@ -283,7 +291,11 @@ exports.changePassword = async (req, res) => {
           `Password updated successfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
         )
       )
-      console.log("Email sent successfully:", emailResponse.response)
+      if (emailResponse && emailResponse.response) {
+        console.log("Email sent successfully:", emailResponse.response)
+      } else {
+        console.log("Email sent successfully")
+      }
     } catch (error) {
       // If there's an error sending the email, log the error and return a 500 (Internal Server Error) error
       console.error("Error occurred while sending email:", error)
