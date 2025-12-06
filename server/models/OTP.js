@@ -42,7 +42,7 @@ async function sendVerificationEmail(email, otp) {
 }
 
 // Define a pre-save hook to send email after the document has been saved
-OTPSchema.pre("save", async function (next) {
+OTPSchema.pre("save", async function () {
 	console.log("New document saved to database");
 
 	// Only send an email when a new document is created
@@ -51,9 +51,10 @@ OTPSchema.pre("save", async function (next) {
 			await sendVerificationEmail(this.email, this.otp);
 		} catch (error) {
 			console.error("Failed to send verification email:", error);
+			// Don't throw error - allow OTP to be saved even if email fails
 		}
 	}
-	next();
+	// No need to call next() when using async/await in Mongoose
 });
 
 const OTP = mongoose.model("OTP", OTPSchema);
