@@ -1,8 +1,6 @@
-const mongoose = require("mongoose")
-const mailSender = require("../utils/mailSender")
-// Yaha apna actual template import karo
-const emailTemplate = require("../mail/templates/emailVerificationTemplate")
+const mongoose = require("mongoose");
 
+// SIMPLE, CLEAN OTP MODEL — NO EMAIL SENDING
 const OTPSchema = new mongoose.Schema(
   {
     email: {
@@ -16,30 +14,10 @@ const OTPSchema = new mongoose.Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      expires: 5 * 60, 
+      expires: 5 * 60, // OTP 5 minutes me expire ho jayega
     },
   },
   { timestamps: true }
-)
+);
 
-async function sendVerificationEmail(email, otp) {
-  try {
-    const mailResponse = await mailSender(
-      email,
-      "Verification Email",
-      emailTemplate(otp)
-    )
-    console.log("Email sent successfully: ", mailResponse.response)
-  } catch (error) {
-    console.log("Error occurred while sending email: ", error)
-   
-  }
-}
-
-OTPSchema.post("save", async function (doc) {
-  console.log("New OTP document saved to database")
-
-  await sendVerificationEmail(doc.email, doc.otp)
-})
-
-module.exports = mongoose.model("OTP", OTPSchema)
+module.exports = mongoose.model("OTP", OTPSchema);

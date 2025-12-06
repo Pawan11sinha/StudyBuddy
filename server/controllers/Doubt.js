@@ -51,6 +51,11 @@ Answer in a clear, step-by-step way. If it is a coding question, explain the log
 
     const model = await getModel();
     const result = await model.generateContent(prompt);
+    
+    if (!result || !result.response) {
+      throw new Error("Failed to get response from AI model");
+    }
+    
     const text = result.response.text();
     // console.log("AI Response:", text);
 

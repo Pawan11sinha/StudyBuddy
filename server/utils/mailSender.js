@@ -7,7 +7,11 @@ const mailSender = async (email, title, body) => {
                 auth:{
                     user: process.env.MAIL_USER,
                     pass: process.env.MAIL_PASS,
-                }
+                },
+                // Add connection timeout to prevent hanging
+                connectionTimeout: 10000, // 10 seconds
+                greetingTimeout: 10000, // 10 seconds
+                socketTimeout: 10000, // 10 seconds
             })
 
 
@@ -22,6 +26,7 @@ const mailSender = async (email, title, body) => {
     }
     catch(error) {
         console.log(error.message);
+        throw error; // Re-throw error so caller knows it failed
     }
 }
 

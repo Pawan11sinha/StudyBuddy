@@ -205,7 +205,11 @@ const enrollStudents = async (courses, userId, res) => {
         )
       )
 
-      console.log("Email sent successfully: ", emailResponse.response)
+      if (emailResponse && emailResponse.response) {
+        console.log("Email sent successfully: ", emailResponse.response)
+      } else {
+        console.log("Email sent successfully")
+      }
     } catch (error) {
       console.log(error)
       return res.status(400).json({ success: false, error: error.message })
