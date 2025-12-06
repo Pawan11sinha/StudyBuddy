@@ -40,14 +40,16 @@ exports.sendotp = async (req, res) => {
         message: `User is Already Registered`,
       })
     }
-      // Generate OTP (no need to check uniqueness since OTPs are email-specific)
+
+   // Generate OTP (no need to check uniqueness since OTPs are email-specific)
     // Same OTP can exist for different emails without conflict
     const otp = otpGenerator.generate(6, {
-        upperCaseAlphabets: false,
       lowerCaseAlphabets: false,
       specialChars: false,
     })
-     const otpPayload = { email, otp }
+
+
+    const otpPayload = { email, otp }
     const otpBody = await OTP.create(otpPayload)
     console.log("OTP Body", otpBody)
 
@@ -280,6 +282,7 @@ exports.changePassword = async (req, res) => {
           `Password updated successfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
         )
       )
+      // console.log("Email sent successfully:", emailResponse.response)
       if (emailResponse && emailResponse.response) {
         console.log("Email sent successfully:", emailResponse.response)
       } else {

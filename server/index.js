@@ -31,6 +31,7 @@ const allowedOrigins = [
 
 console.log("Allowed CORS origins:", allowedOrigins);
 
+
 // CORS configuration
 const corsOptions = {
   origin: function (origin, callback) {
@@ -47,9 +48,11 @@ const corsOptions = {
         callback(null, true);
       } else {
         // Log the origin that was rejected for debugging
+      
         console.log("CORS blocked origin:", origin, "- Allowed origins:", allowedOrigins);
         callback(new Error('Not allowed by CORS'));
       }
+
     }
   },
   credentials: true,
@@ -101,3 +104,4 @@ app.get("/ping", (req, res) => {
 app.listen(PORT, () => {
   console.log(`App is running at ${PORT}`);
 });
+
