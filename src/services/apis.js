@@ -1,5 +1,5 @@
-const API_ROOT = import.meta.env.VITE_BACKEND_URL
-const BASE_URL = `${API_ROOT}/api/v1`
+const BASE_URL = import.meta.env.VITE_BACKEND_URL
+
 // AUTH ENDPOINTS
 export const endpoints = {
   SENDOTP_API: BASE_URL + "/auth/sendotp",

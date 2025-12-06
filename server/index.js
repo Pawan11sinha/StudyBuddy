@@ -23,7 +23,7 @@ database.connect();
 
 const allowedOrigins = [
   "http://localhost:5173",                
-  "https://studybuddy-frontend-orpin.vercel.app/",
+
 ];
 
 app.use(
