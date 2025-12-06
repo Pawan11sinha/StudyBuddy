@@ -23,7 +23,7 @@ database.connect();
 
 const allowedOrigins = [
   "http://localhost:5173",                
-  "https://study-buddy-omega-tan.vercel.app", 
+  "https://study-buddy-omega-tan.vercel.app",
 ];
 
 app.use(
